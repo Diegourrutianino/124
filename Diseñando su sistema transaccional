@@ -1,0 +1,42 @@
+create database SisTransaccional
+
+use Sistransaccional
+
+-- Crear la tabla de Productos
+CREATE TABLE Productos (
+    CodigoProducto INT PRIMARY KEY,
+    Nombre NVARCHAR(100),
+    Descripcion NVARCHAR(255),
+    CantidadInventario INT,
+    PrecioVenta DECIMAL(10, 2)
+);
+
+-- Crear la tabla de Clientes
+CREATE TABLE Clientes (
+    ClienteID NVARCHAR(20) PRIMARY KEY,
+    Nombre NVARCHAR(100),
+    Direccion NVARCHAR(255),
+    CorreoElectronico NVARCHAR(100),
+    NumeroTelefono NVARCHAR(20)
+);
+
+-- Crear la tabla de Compras
+CREATE TABLE Compras (
+    CompraID INT IDENTITY(1,1) PRIMARY KEY,
+    FechaCompra DATE,
+    ClienteID NVARCHAR(20) FOREIGN KEY REFERENCES Clientes(ClienteID),
+    CodigoProducto INT FOREIGN KEY REFERENCES Productos(CodigoProducto),
+    CantidadComprada INT,
+    PrecioUnitario DECIMAL(10, 2)
+);
+
+-- Crear la tabla de Facturas
+CREATE TABLE Facturas (
+    FacturaID INT IDENTITY(1,1) PRIMARY KEY,
+    FechaFactura DATE,
+    ClienteID NVARCHAR(20) FOREIGN KEY REFERENCES Clientes(ClienteID),
+    CodigoProducto INT FOREIGN KEY REFERENCES Productos(CodigoProducto),
+    CantidadComprada INT,
+    PrecioUnitario DECIMAL(10, 2),
+    TotalFactura DECIMAL(10, 2)
+);
